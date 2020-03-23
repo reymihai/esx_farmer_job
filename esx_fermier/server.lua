@@ -7,7 +7,11 @@ RegisterNetEvent("dat_Faina")
 AddEventHandler("dat_Faina",function()
     local xPlayer = ESX.GetPlayerFromId(source)
     local chance = math.random(10)
-    xPlayer.addInventoryItem("faina", chance)
+    if xPlayer.canCarryItem("faina",chance) then 
+        xPlayer.addInventoryItem("faina", chance)
+    else
+        xPlayer.showNotification("~y~You can't carry that much!")
+    end
 end)
 
 
@@ -21,8 +25,8 @@ AddEventHandler("fermier_sell",function()
     if cantitate > 0  then 
         xPlayer.addMoney(amount)
         xPlayer.removeInventoryItem("faina", amount)
-        TriggerClientEvent('esx:showNotification', source, '~y~You sold all the flour you had!')
+        xPlayer.showNotification('~y~You sold all the flour you had!')
     else
-        TriggerClientEvent('esx:showNotification', source, "~r~You don't have any flour!")
+       xPlayer.showNotification("~r~You don't have any flour!")
     end
 end)
